@@ -1,61 +1,50 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-
 public class HW1Test {
 
-    //Test sorting a normal unsorted array
     @Test
-    public void testMergeSortNormalArray() {
-        int[] arr = {5, 2, 4, 6, 1, 3, 2, 6};
-        int[] expected = {1, 2, 2, 3, 4, 5, 6, 6};
+    void testNormalMerge() {
+        int[] a = {1, 4, 7};
+        int[] b = {2, 3, 6};
+        int[] expected = {1, 2, 3, 4, 6, 7};
 
-        HW1.mergeSort(arr);
-
-        assertArrayEquals(expected, arr);
+        assertArrayEquals(expected, HW1Test.mergeArrays(a, b));
     }
 
-    //Test sorting an already sorted array.
     @Test
-    public void testMergeSortAlreadySorted() {
-        int[] arr = {1, 2, 3, 4, 5};
-        int[] expected = {1, 2, 3, 4, 5};
+    void testOneEmptyArray() {
+        int[] a = {};
+        int[] b = {1, 2, 3};
+        int[] expected = {1, 2, 3};
 
-        HW1.mergeSort(arr);
-
-        assertArrayEquals(expected, arr);
+        assertArrayEquals(expected, HW1Test.mergeArrays(a, b));
     }
 
-    //Test sorting an array with duplicate values.
     @Test
-    public void testMergeSortWithDuplicates() {
-        int[] arr = {3, 1, 2, 3, 1};
-        int[] expected = {1, 1, 2, 3, 3};
-
-        HW1.mergeSort(arr);
-
-        assertArrayEquals(expected, arr);
-    }
-
-    //Test sorting a single-element array.
-    @Test
-    public void testMergeSortSingleElement() {
-        int[] arr = {42};
-        int[] expected = {42};
-
-        HW1.mergeSort(arr);
-
-        assertArrayEquals(expected, arr);
-    }
-
-    //Test sorting an empty array.
-    @Test
-    public void testMergeSortEmptyArray() {
-        int[] arr = {};
+    void testBothEmpty() {
+        int[] a = {};
+        int[] b = {};
         int[] expected = {};
 
-        HW1.mergeSort(arr);
+        assertArrayEquals(expected, HW1Test.mergeArrays(a, b));
+    }
 
-        assertArrayEquals(expected, arr);
+    @Test
+    void testDuplicates() {
+        int[] a = {1, 2, 2};
+        int[] b = {2, 3};
+        int[] expected = {1, 2, 2, 2, 3};
+
+        assertArrayEquals(expected, HW1Test.mergeArrays(a, b));
+    }
+
+    @Test
+    void testNegativeNumbers() {
+        int[] a = {-5, -1, 3};
+        int[] b = {-2, 4};
+        int[] expected = {-5, -2, -1, 3, 4};
+
+        assertArrayEquals(expected, HW1Test.mergeArrays(a, b));
     }
 }
