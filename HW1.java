@@ -1,96 +1,57 @@
 /**
- * Merge sort on an integer array.
- * The method recursively divides the array in halves, sort 
- * each half, then merges them back together. 
+ *  A method to merge two sorted array together
  */
 
 public class HW1 {
 
 	public static void main(String[] args) {
-		int[] arr = {5, 2, 4, 6, 1, 3, 2, 6};
+		int[] a = {1, 3, 5, 7};
+        int[] b = {2, 4, 6, 8};
 	
-		System.out.println("Before:");
-		printArray(arr);
-
-		// Sort the array using merge sort
-		mergeSort(arr);
-
-		System.out.println("After:");
-		printArray(arr);
+		int[] mergedArr = mergeArrays(a, b);
+        printArray(mergedArr);
 	}
 
-	// Recursively merge sorts the given array
-    public static void mergeSort(int[] inputArray) {
-        int inputLength = inputArray.length;
+    // Method to merge two sorted arrays 
+    public static int[] mergeArrays(int[] left, int[] right) {
+        int leftSize = left.length;
+        int rightSize = right.length;
 
-        // Case for arrays of size 0 or 1 already sorted
-        if (inputLength < 2) {
-        	return;
+        // Create result array with combined size
+        int[] result = new int[leftSize + rightSize];
+
+        int i = 0; // index for left array
+        int j = 0; // index for right array
+        int k = 0; // index for result array
+
+        // Compare elements from both arrays and copy the smaller one
+        while (i < leftSize && j < rightSize) {
+            if (left[i] <= right[j]) {
+                result[k] = left[i];
+                i++;
+            } else {
+                result[k] = right[j];
+                j++;
+            }
+            k++;
         }
 
-        // Find the midpoint of array
-        int mid = inputLength / 2;
-
-        // Create subarrays for left and right halves
-        int[] leftHalf = new int[mid];
-        int[] rightHalf = new int[inputLength - mid];
-
-        // Values of left array
-        for (int i = 0; i < mid; i++) {
-        	leftHalf[i] = inputArray[i];
+        // Copy any remaining elements from left array
+        while (i < leftSize) {
+            result[k] = left[i];
+            i++;
+            k++;
         }
 
-        // Values of right arrays
-        for (int i = mid; i < inputLength; i++) {
-        	rightHalf[i - mid] = inputArray[i];
+        // Copy any remaining elements from right array
+        while (j < rightSize) {
+            result[k] = right[j];
+            j++;
+            k++;
         }
-
-        // Recursively merge sort both halves
-        mergeSort(leftHalf);
-        mergeSort(rightHalf);
-
-        // Merge the sorted halves arrays back together into the original array
-        merge(inputArray, leftHalf, rightHalf);
+        return result;
     }
-
-    // Merge two sorted subarrays into a single sorted array
-    private static void merge(int[] inputArray, int[] leftHalf, int[] rightHalf) {
-    	int leftSize = leftHalf.length;
-    	int rightSize = rightHalf.length;
-
-    	int i = 0; // index for leftHalf
-    	int j = 0; // index for rightHalf
-    	int k = 0; // index for inputArray
-
-    	// Compare elements from both arrays and copy the smaller one
-    	while (i < leftSize && j < rightSize) {
-    		if (leftHalf[i] <= rightHalf[j]) {
-    			inputArray[k] = leftHalf[i];
-    			i++;
-    		}
-    		else {
-    			inputArray[k] = rightHalf[j];
-    			j++;
-    		}
-    		k++;
-    	}
-
-    	// Copy any remaining elements from leftHalf
-    	while (i < leftSize) {
-    		inputArray[k] = leftHalf[i];
-    		i++;
-    		k++;
-    	}
-
-    	// Copy any remaining elements from rightHalf
-    	while (j< rightSize) {
-    		inputArray[k] = rightHalf[j];
-    		j++;
-    		k++;
-    	}
-
-    }
-
+    
     // Print all elements of array.
     private static void printArray(int[] arr) {
     	for (int i = 0; i < arr.length; i++) {
